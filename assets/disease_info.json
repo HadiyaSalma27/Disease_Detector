@@ -1,0 +1,71 @@
+{
+  "Tomato_Bacterial_spot": {
+    "features": "Small dark brown spots on leaves and fruits surrounded by yellow halos.",
+    "cause": "Caused by Xanthomonas bacteria which spread through infected seeds, water splash, and contaminated tools.",
+    "prevention": "Use certified disease-free seeds, avoid overhead irrigation, rotate crops, and maintain good field sanitation.",
+    "cure": "Apply copper-based bactericides and remove infected plant parts to prevent further spread."
+  },
+
+  "Tomato_Early_blight": {
+    "features": "Dark brown spots with concentric rings forming a target pattern on older leaves.",
+    "cause": "Caused by the fungus Alternaria solani which thrives in warm and humid conditions.",
+    "prevention": "Practice crop rotation, keep foliage dry, provide proper spacing for airflow, and remove infected debris.",
+    "cure": "Apply fungicides such as chlorothalonil or copper fungicides regularly."
+  },
+
+  "Tomato_healthy": {
+    "features": "Leaves appear green, firm, and free from spots or discoloration.",
+    "cause": "No disease present. The plant is healthy and growing normally.",
+    "prevention": "Maintain good agricultural practices such as proper watering, fertilization, and pest control.",
+    "cure": "No treatment required. Continue maintaining proper plant care."
+  },
+
+  "Tomato_Late_blight": {
+    "features": "Large dark brown lesions on leaves with pale green edges and white fungal growth underneath.",
+    "cause": "Caused by the pathogen Phytophthora infestans which spreads rapidly in cool and moist weather.",
+    "prevention": "Avoid wet leaves, provide good airflow, remove infected plants, and use resistant varieties.",
+    "cure": "Apply fungicides containing copper or mancozeb to control the spread."
+  },
+
+  "Tomato_Leaf_Mold": {
+    "features": "Yellow patches on upper leaf surfaces with olive-green mold on the underside.",
+    "cause": "Caused by the fungus Passalora fulva which develops in humid greenhouse conditions.",
+    "prevention": "Reduce humidity, improve ventilation, and avoid overhead watering.",
+    "cure": "Apply fungicides and remove infected leaves to stop the spread."
+  },
+
+  "Tomato_Septoria_leaf_spot": {
+    "features": "Small circular spots with gray centers and dark edges on leaves.",
+    "cause": "Caused by the fungus Septoria lycopersici which spreads through water splash and plant debris.",
+    "prevention": "Use crop rotation, remove infected leaves, and keep foliage dry.",
+    "cure": "Apply fungicides such as chlorothalonil or copper-based sprays."
+  },
+
+  "Tomato_Spider_mites": {
+    "features": "Tiny yellow or white speckles on leaves and fine webbing on the underside.",
+    "cause": "Caused by spider mites feeding on plant sap, usually in hot and dry conditions.",
+    "prevention": "Maintain adequate humidity and regularly inspect plants for early signs of mites.",
+    "cure": "Use insecticidal soaps, neem oil, or miticides to control the infestation."
+  },
+
+  "Tomato_Target_Spot": {
+    "features": "Brown circular lesions with concentric rings that resemble a target pattern.",
+    "cause": "Caused by the fungus Corynespora cassiicola which spreads in warm and humid environments.",
+    "prevention": "Ensure proper plant spacing, remove infected debris, and practice crop rotation.",
+    "cure": "Apply fungicides such as chlorothalonil or azoxystrobin."
+  },
+
+  "Tomato_Tomato_mosaic_virus": {
+    "features": "Mosaic-like yellow and green mottling on leaves with distorted growth.",
+    "cause": "Caused by Tomato Mosaic Virus which spreads through contaminated tools, seeds, and human handling.",
+    "prevention": "Use virus-resistant varieties, disinfect tools, and avoid handling plants after tobacco use.",
+    "cure": "There is no cure; remove and destroy infected plants immediately."
+  },
+
+  "Tomato_Yellow_Leaf_Curl_Virus": {
+    "features": "Leaves curl upward and turn yellow with stunted plant growth.",
+    "cause": "Caused by Tomato Yellow Leaf Curl Virus transmitted by whiteflies.",
+    "prevention": "Control whitefly populations, use resistant varieties, and install insect screens.",
+    "cure": "Remove infected plants and control whiteflies using insecticides or neem oil."
+  }
+}

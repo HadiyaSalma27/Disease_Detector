@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../providers/language_provider.dart';
 import '../l10n/app_strings.dart';
 import '../services/tflite_service.dart';
+import '../services/disease_info_service.dart';
 
 class DetectDiseaseScreen extends StatefulWidget {
   const DetectDiseaseScreen({super.key});
@@ -23,6 +24,8 @@ class _DetectDiseaseScreenState extends State<DetectDiseaseScreen> {
   final TFLiteService _tfliteService = TFLiteService();
 
   String result = "";
+  Map<String, dynamic>? diseaseInfo;
+
   bool isLoading = false;
   bool modelLoaded = false;
 
@@ -32,19 +35,19 @@ class _DetectDiseaseScreenState extends State<DetectDiseaseScreen> {
     _initializeModel();
   }
 
-  // LOAD MODEL ON START
   Future<void> _initializeModel() async {
 
-  bool loaded = await _tfliteService.loadModel();
+    bool loaded = await _tfliteService.loadModel();
 
-  setState(() {
-    modelLoaded = loaded;
-  });
+    setState(() {
+      modelLoaded = loaded;
+    });
 
-}
+  }
 
   // CAMERA
   Future pickCamera() async {
+
     final picked =
         await picker.pickImage(source: ImageSource.camera);
 
@@ -52,12 +55,14 @@ class _DetectDiseaseScreenState extends State<DetectDiseaseScreen> {
       setState(() {
         selectedImage = File(picked.path);
         result = "";
+        diseaseInfo = null;
       });
     }
   }
 
   // GALLERY
   Future pickGallery() async {
+
     final picked =
         await picker.pickImage(source: ImageSource.gallery);
 
@@ -65,16 +70,20 @@ class _DetectDiseaseScreenState extends State<DetectDiseaseScreen> {
       setState(() {
         selectedImage = File(picked.path);
         result = "";
+        diseaseInfo = null;
       });
     }
   }
 
   // REMOVE IMAGE
   void removeImage() {
+
     setState(() {
       selectedImage = null;
       result = "";
+      diseaseInfo = null;
     });
+
   }
 
   // PREDICTION
@@ -103,6 +112,7 @@ class _DetectDiseaseScreenState extends State<DetectDiseaseScreen> {
     setState(() {
       isLoading = true;
       result = "";
+      diseaseInfo = null;
     });
 
     try {
@@ -110,9 +120,26 @@ class _DetectDiseaseScreenState extends State<DetectDiseaseScreen> {
       String prediction =
           await _tfliteService.predict(selectedImage!);
 
+      print("Prediction from model: $prediction");
+
+      /* CLEAN MODEL OUTPUT
+      String cleanPrediction = prediction
+          .replaceAll("Tomato___", "")
+          .replaceAll("Tomato_", "")
+          .replaceAll("_", " ");
+
+      print("Cleaned disease name: $cleanPrediction");*/
+
+      // GET DATA FROM JSON
+      diseaseInfo =
+          DiseaseInfoService.getDiseaseInfo(prediction);
+
       setState(() {
+
         result = prediction;
+
         isLoading = false;
+
       });
 
     } catch (e) {
@@ -123,6 +150,7 @@ class _DetectDiseaseScreenState extends State<DetectDiseaseScreen> {
         result = "Prediction Failed";
         isLoading = false;
       });
+
     }
   }
 
@@ -134,6 +162,7 @@ class _DetectDiseaseScreenState extends State<DetectDiseaseScreen> {
             .languageCode;
 
     return Scaffold(
+
       backgroundColor: Colors.grey[100],
 
       appBar: AppBar(
@@ -144,11 +173,13 @@ class _DetectDiseaseScreenState extends State<DetectDiseaseScreen> {
       ),
 
       body: SingleChildScrollView(
+
         padding: const EdgeInsets.all(20),
+
         child: Column(
           children: [
 
-            // IMAGE PREVIEW
+            /// IMAGE PREVIEW WITH CLOSE BUTTON
             if (selectedImage != null)
               Card(
                 shape: RoundedRectangleBorder(
@@ -189,7 +220,7 @@ class _DetectDiseaseScreenState extends State<DetectDiseaseScreen> {
 
             const SizedBox(height: 20),
 
-            // CAMERA & GALLERY
+            /// CAMERA & GALLERY BUTTONS
             Row(
               children: [
 
@@ -201,8 +232,10 @@ class _DetectDiseaseScreenState extends State<DetectDiseaseScreen> {
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
-                      padding:
-                          const EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
                     ),
                     onPressed: pickCamera,
                   ),
@@ -218,66 +251,110 @@ class _DetectDiseaseScreenState extends State<DetectDiseaseScreen> {
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
-                      padding:
-                          const EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
                     ),
                     onPressed: pickGallery,
                   ),
                 ),
+
               ],
             ),
 
             const SizedBox(height: 20),
 
-            // PREDICT BUTTON
+            /// PREDICT BUTTON
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () => predict(lang),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,
-                  padding:
-                      const EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
                 ),
                 child: Text(
-                  AppStrings.text(
-                      "predict_disease", lang),
-                  style:
-                      const TextStyle(fontSize: 18),
+                  AppStrings.text("predict_disease", lang),
+                  style: const TextStyle(fontSize: 18),
                 ),
               ),
             ),
 
             const SizedBox(height: 20),
 
-            // LOADING
+            /// LOADING
             if (isLoading)
               const CircularProgressIndicator(),
 
             const SizedBox(height: 20),
 
-            // RESULT
+            /// RESULT
             if (result.isNotEmpty)
               Card(
                 elevation: 4,
                 shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(15),
                 ),
                 child: Padding(
-                  padding:
-                      const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: Text(
                     result,
                     style: const TextStyle(
                       fontSize: 22,
-                      color: Colors.red,
-                      fontWeight:
-                          FontWeight.bold,
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
               ),
+
+            const SizedBox(height: 20),
+
+            /// DISEASE INFORMATION
+            if (diseaseInfo != null)
+              Card(
+                elevation: 4,
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+
+                      Text(
+                        "Features: ${diseaseInfo!['features'] ?? 'N/A'}",
+                        style: const TextStyle(fontSize: 16),
+                      ),
+
+                      const SizedBox(height: 10),
+
+                      Text(
+                        "Cause: ${diseaseInfo!['cause'] ?? 'N/A'}",
+                        style: const TextStyle(fontSize: 16),
+                      ),
+
+                      const SizedBox(height: 10),
+
+                      Text(
+                        "Prevention: ${diseaseInfo!['prevention'] ?? 'N/A'}",
+                        style: const TextStyle(fontSize: 16),
+                      ),
+
+                      const SizedBox(height: 10),
+
+                      Text(
+                        "Cure: ${diseaseInfo!['cure'] ?? 'N/A'}",
+                        style: const TextStyle(fontSize: 16),
+                      ),
+
+                    ],
+                  ),
+                ),
+              ),
+
           ],
         ),
       ),
