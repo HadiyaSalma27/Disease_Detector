@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -16,15 +18,41 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  void registerUser() {
+  Future<void> registerUser() async {
 
     if (_formKey.currentState!.validate()) {
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Account Created Successfully")),
-      );
+      try {
 
-      Navigator.pop(context);
+        // Create user in Firebase Authentication
+        UserCredential userCredential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim(),
+        );
+
+        String uid = userCredential.user!.uid;
+
+        // Create Firestore document automatically
+        await FirebaseFirestore.instance.collection("users").doc(uid).set({
+          "name": nameController.text.trim(),
+          "email": emailController.text.trim(),
+          "phone": phoneController.text.trim(),
+          "createdAt": Timestamp.now()
+        });
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Account Created Successfully")),
+        );
+
+        Navigator.pop(context);
+
+      } catch (e) {
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.toString())),
+        );
+      }
     }
   }
 
@@ -45,7 +73,6 @@ class _SignupScreenState extends State<SignupScreen> {
           key: _formKey,
 
           child: SingleChildScrollView(
-
             child: Column(
               children: [
 

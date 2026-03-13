@@ -1,107 +1,32 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:image_picker/image_picker.dart';
 
-import '../providers/language_provider.dart';
-import '../l10n/app_strings.dart';
+import 'login_screen.dart';
+import 'signup_screen.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
 
-    var provider = Provider.of<LanguageProvider>(context);
-    String lang = provider.languageCode;
+class _ProfileScreenState extends State<ProfileScreen> {
 
-    return Scaffold(
-      backgroundColor: Colors.grey[100],
+  File? profileImage;
 
-      appBar: AppBar(
-        backgroundColor: Colors.green,
-        elevation: 0,
-        title: Text(
-          AppStrings.text("profile", lang),
-        ),
-      ),
+  Future pickImage() async {
+    final picked = await ImagePicker().pickImage(source: ImageSource.gallery);
 
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-
-            const SizedBox(height: 25),
-
-            // PROFILE IMAGE
-            const CircleAvatar(
-              radius: 60,
-              backgroundImage: AssetImage(
-                "assets/images/profile.webp",
-              ),
-            ),
-
-            const SizedBox(height: 15),
-
-            // NAME
-            const Text(
-              "Gopalan",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-
-            const SizedBox(height: 5),
-
-            // EMAIL
-            const Text(
-              "gopalan@email.com",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
-            const Divider(),
-
-            profileTile(
-              icon: Icons.person,
-              title: AppStrings.text("name", lang),
-              value: "Gopalan",
-            ),
-
-            profileTile(
-              icon: Icons.email,
-              title: AppStrings.text("email", lang),
-              value: "gopalan@email.com",
-            ),
-
-            profileTile(
-              icon: Icons.phone,
-              title: AppStrings.text("phone", lang),
-              value: "+91 9876543210",
-            ),
-
-            listTile(
-              icon: Icons.lock,
-              title: AppStrings.text("change_password", lang),
-            ),
-
-            listTile(
-              icon: Icons.settings,
-              title: AppStrings.text("manage_preferences", lang),
-            ),
-
-            listTile(
-              icon: Icons.logout,
-              title: AppStrings.text("logout", lang),
-              color: Colors.red,
-            ),
-
-          ],
-        ),
-      ),
-    );
+    if (picked != null) {
+      setState(() {
+        profileImage = File(picked.path);
+      });
+    }
   }
 
   Widget profileTile({
@@ -112,13 +37,17 @@ class ProfileScreen extends StatelessWidget {
     return ListTile(
       leading: Icon(icon, color: Colors.green),
       title: Text(title),
-      trailing: Text(value),
+      trailing: Text(
+        value,
+        style: const TextStyle(fontWeight: FontWeight.w500),
+      ),
     );
   }
 
-  Widget listTile({
+  Widget actionTile({
     required IconData icon,
     required String title,
+    required VoidCallback onTap,
     Color? color,
   }) {
     return ListTile(
@@ -127,12 +56,198 @@ class ProfileScreen extends StatelessWidget {
         title,
         style: TextStyle(
           color: color ?? Colors.black,
+          fontWeight: FontWeight.w500,
         ),
       ),
-      trailing: const Icon(
-        Icons.arrow_forward_ios,
-        size: 16,
-      ),
+      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+      onTap: onTap,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user == null) {
+
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text("Profile"),
+          backgroundColor: Colors.green,
+        ),
+
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+
+              const Text(
+                "You are not logged in",
+                style: TextStyle(fontSize: 18),
+              ),
+
+              const SizedBox(height: 20),
+
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const LoginScreen()),
+                  );
+                },
+                child: const Text("Login"),
+              ),
+
+              const SizedBox(height: 10),
+
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const SignupScreen()),
+                  );
+                },
+                child: const Text("Sign Up"),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return FutureBuilder(
+      future: FirebaseFirestore.instance
+          .collection("users")
+          .doc(user.uid)
+          .get(),
+
+      builder: (context, snapshot) {
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+
+        if (!snapshot.hasData || !snapshot.data!.exists) {
+          return const Scaffold(
+            body: Center(child: Text("No user data found")),
+          );
+        }
+
+        Map<String, dynamic> data =
+        snapshot.data!.data() as Map<String, dynamic>;
+
+        return Scaffold(
+
+          backgroundColor: Colors.grey[100],
+
+          appBar: AppBar(
+            title: const Text("Profile"),
+            backgroundColor: Colors.green,
+          ),
+
+          body: SingleChildScrollView(
+
+            child: Column(
+              children: [
+
+                const SizedBox(height: 25),
+
+                GestureDetector(
+                  onTap: pickImage,
+                  child: CircleAvatar(
+                    radius: 60,
+                    backgroundImage: profileImage != null
+                        ? FileImage(profileImage!)
+                        : null,
+                    child: profileImage == null
+                        ? const Icon(Icons.camera_alt, size: 40)
+                        : null,
+                  ),
+                ),
+
+                const SizedBox(height: 15),
+
+                Text(
+                  data["name"] ?? "",
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+
+                const SizedBox(height: 5),
+
+                Text(
+                  data["email"] ?? "",
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey,
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                const Divider(),
+
+                profileTile(
+                  icon: Icons.person,
+                  title: "Name",
+                  value: data["name"] ?? "",
+                ),
+
+                profileTile(
+                  icon: Icons.email,
+                  title: "Email",
+                  value: data["email"] ?? "",
+                ),
+
+                profileTile(
+                  icon: Icons.phone,
+                  title: "Phone",
+                  value: data["phone"] ?? "",
+                ),
+
+                actionTile(
+                  icon: Icons.lock,
+                  title: "Change Password",
+                  onTap: () async {
+
+                    await FirebaseAuth.instance
+                        .sendPasswordResetEmail(email: user.email!);
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                          content:
+                          Text("Password reset email sent")),
+                    );
+                  },
+                ),
+
+                actionTile(
+                  icon: Icons.logout,
+                  title: "Logout",
+                  color: Colors.red,
+                  onTap: () async {
+
+                    await FirebaseAuth.instance.signOut();
+
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const LoginScreen()),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

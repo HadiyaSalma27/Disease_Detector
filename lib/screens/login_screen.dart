@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,15 +17,52 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool obscurePassword = true;
 
-  void loginUser() {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> loginUser() async {
 
     if (_formKey.currentState!.validate()) {
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Login Successful")),
-      );
+      try {
 
-      Navigator.pop(context);
+        await _auth.signInWithEmailAndPassword(
+          email: usernameController.text.trim(),
+          password: passwordController.text.trim(),
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Login Successful")),
+        );
+
+        Navigator.pop(context);
+
+      } on FirebaseAuthException catch (e) {
+
+        String message = "Login Failed";
+
+        if (e.code == 'user-not-found') {
+          message = "No user found with this email";
+        }
+
+        if (e.code == 'wrong-password') {
+          message = "Incorrect password";
+        }
+
+        if (e.code == 'invalid-email') {
+          message = "Invalid email";
+        }
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(message)),
+        );
+
+      } catch (e) {
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error: $e")),
+        );
+
+      }
     }
   }
 
@@ -53,12 +91,12 @@ class _LoginScreenState extends State<LoginScreen> {
               TextFormField(
                 controller: usernameController,
                 decoration: const InputDecoration(
-                  labelText: "Username",
+                  labelText: "Email",
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Enter username";
+                    return "Enter email";
                   }
                   return null;
                 },

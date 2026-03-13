@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../providers/language_provider.dart';
 import '../l10n/app_strings.dart';
+
 import 'detect_disease_screen.dart';
 import 'profile_screen.dart';
 import 'notifications_screen.dart';
 import 'login_screen.dart';
 import 'signup_screen.dart';
+
+import '../services/weather_alert_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,7 +21,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  int _selectedIndex = 1; // Home selected
+  int _selectedIndex = 1;
 
   void _onItemTapped(int index) {
 
@@ -29,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => ProfileScreen(), // ✅ no const
+          builder: (_) => ProfileScreen(),
         ),
       );
     }
@@ -38,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => NotificationScreen(), // ✅ correct name
+          builder: (_) => NotificationScreen(),
         ),
       );
     }
@@ -52,7 +56,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
 
-      // ================= APP BAR =================
       appBar: AppBar(
         backgroundColor: Colors.green,
         elevation: 2,
@@ -65,14 +68,8 @@ class _HomeScreenState extends State<HomeScreen> {
             iconEnabledColor: Colors.white,
             style: const TextStyle(color: Colors.black),
             items: const [
-              DropdownMenuItem(
-                value: "en",
-                child: Text("English"),
-              ),
-              DropdownMenuItem(
-                value: "ml",
-                child: Text("Malayalam"),
-              ),
+              DropdownMenuItem(value: "en", child: Text("English")),
+              DropdownMenuItem(value: "ml", child: Text("Malayalam")),
             ],
             onChanged: (value) {
               languageProvider.changeLanguage(value!);
@@ -129,7 +126,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
 
-      // ================= BODY =================
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -138,7 +134,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
               const SizedBox(height: 30),
 
-              // ===== TITLE =====
               Text(
                 AppStrings.text("home_title", lang),
                 textAlign: TextAlign.center,
@@ -150,7 +145,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
               const SizedBox(height: 20),
 
-              // ===== IMAGE BELOW TITLE =====
               Image.asset(
                 "assets/images/tomato_plant.png",
                 height: 500,
@@ -159,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
               const SizedBox(height: 40),
 
-              // ===== DETECT BUTTON =====
+              /// Detect Disease
               SizedBox(
                 width: double.infinity,
                 height: 55,
@@ -169,7 +163,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    elevation: 5,
                   ),
                   onPressed: () {
                     Navigator.push(
@@ -181,19 +174,39 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   child: Text(
                     AppStrings.text("detect_disease", lang),
-                    style: const TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                    ),
+                    style: const TextStyle(fontSize: 18),
                   ),
                 ),
               ),
+
+              const SizedBox(height: 20),
+
+              /// Weather AI Alert
+              SizedBox(
+                width: double.infinity,
+                height: 55,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                  onPressed: () async {
+                    await WeatherAlertService.checkWeatherDiseaseRisk();
+                  },
+                  child: const Text(
+                    "Check Weather Disease Risk",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
+              ),
+
             ],
           ),
         ),
       ),
 
-      // ================= BOTTOM NAVIGATION =================
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

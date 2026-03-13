@@ -5,33 +5,22 @@ class DiseaseInfoService {
 
   static Map<String, dynamic> _diseaseData = {};
 
-  // Load JSON file
+  /// Load JSON when app starts
   static Future<void> loadDiseaseData() async {
 
-    try {
+    String jsonString =
+        await rootBundle.loadString('assets/disease_info.json');
 
-      final String jsonString =
-          await rootBundle.loadString('assets/disease_info.json');
-
-      _diseaseData = json.decode(jsonString);
-
-      print("Disease dataset loaded successfully");
-
-    } catch (e) {
-
-      print("Error loading disease dataset: $e");
-
-    }
+    _diseaseData = json.decode(jsonString);
   }
 
-  // Get disease information
+  /// Get disease information
   static Map<String, dynamic>? getDiseaseInfo(String diseaseName) {
 
-    // Remove prefix if model returns it
-    String cleanName =
-        diseaseName.replaceAll("Tomato___", "");
+    if (_diseaseData.containsKey(diseaseName)) {
+      return _diseaseData[diseaseName];
+    }
 
-    return _diseaseData[cleanName];
+    return null;
   }
-
 }

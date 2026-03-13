@@ -1,71 +1,231 @@
 {
   "Tomato_Bacterial_spot": {
-    "features": "Small dark brown spots on leaves and fruits surrounded by yellow halos.",
-    "cause": "Caused by Xanthomonas bacteria which spread through infected seeds, water splash, and contaminated tools.",
-    "prevention": "Use certified disease-free seeds, avoid overhead irrigation, rotate crops, and maintain good field sanitation.",
-    "cure": "Apply copper-based bactericides and remove infected plant parts to prevent further spread."
+    "name": {
+      "en": "Tomato Bacterial Spot",
+      "ml": "ബാക്ടീരിയൽ പുള്ളിരോഗം"
+    },
+    "features": {
+      "en": "Small dark brown spots on leaves and fruits surrounded by yellow halos.",
+      "ml": "ഇലകളിലും ഫലങ്ങളിലും ചെറിയ കറുത്ത തവിട്ടുനിറത്തിലുള്ള പാടുകൾ കാണപ്പെടുകയും അവയുടെ ചുറ്റും മഞ്ഞ വലയങ്ങൾ ഉണ്ടാകുകയും ചെയ്യുന്നു."
+    },
+    "cause": {
+      "en": "Caused by Xanthomonas bacteria which spread through infected seeds, water splash, and contaminated tools.",
+      "ml": "ബാധിച്ച വിത്തുകൾ, വെള്ളത്തിന്റെ ചിതറൽ, മലിനമായ ഉപകരണങ്ങൾ എന്നിവ വഴി പകരുന്ന Xanthomonas ബാക്ടീരിയ മൂലമാണ് ഇത് ഉണ്ടാകുന്നത്."
+    },
+    "prevention": {
+      "en": "Use certified disease-free seeds, avoid overhead irrigation, rotate crops, and maintain good field sanitation.",
+      "ml": "രോഗമില്ലാത്ത വിത്തുകൾ ഉപയോഗിക്കുക, മുകളിലൂടെ വെള്ളം ഒഴിക്കുന്നത് ഒഴിവാക്കുക, വിളമാറ്റം നടത്തുക, വയലിൽ ശുചിത്വം പാലിക്കുക."
+    },
+    "cure": {
+      "en": "Apply copper-based bactericides and remove infected plant parts to prevent further spread.",
+      "ml": "കോപർ അടിസ്ഥാനത്തിലുള്ള ബാക്ടീരിസൈഡുകൾ ഉപയോഗിക്കുകയും ബാധിച്ച സസ്യഭാഗങ്ങൾ നീക്കം ചെയ്യുകയും ചെയ്യുക."
+    }
   },
 
   "Tomato_Early_blight": {
-    "features": "Dark brown spots with concentric rings forming a target pattern on older leaves.",
-    "cause": "Caused by the fungus Alternaria solani which thrives in warm and humid conditions.",
-    "prevention": "Practice crop rotation, keep foliage dry, provide proper spacing for airflow, and remove infected debris.",
-    "cure": "Apply fungicides such as chlorothalonil or copper fungicides regularly."
+    "name": {
+      "en": "Tomato Early Blight",
+      "ml": "കരിപ്പാൻ രോഗം"
+    },
+    "features": {
+      "en": "Dark brown spots with concentric rings forming a target pattern on older leaves.",
+      "ml": "പഴയ ഇലകളിൽ ലക്ഷ്യചിഹ്നം പോലുള്ള വലയങ്ങളോടുകൂടിയ കറുത്ത തവിട്ടുനിറത്തിലുള്ള പാടുകൾ കാണപ്പെടുന്നു."
+    },
+    "cause": {
+      "en": "Caused by the fungus Alternaria solani which thrives in warm and humid conditions.",
+      "ml": "ചൂടും ഈർപ്പവും കൂടുതലുള്ള സാഹചര്യങ്ങളിൽ വളരുന്ന Alternaria solani എന്ന ഫംഗസ് മൂലമാണ് ഇത് ഉണ്ടാകുന്നത്."
+    },
+    "prevention": {
+      "en": "Practice crop rotation, keep foliage dry, provide proper spacing for airflow, and remove infected debris.",
+      "ml": "വിളമാറ്റം നടത്തുക, ഇലകൾ വരണ്ട നിലയിൽ സൂക്ഷിക്കുക, വായു സഞ്ചാരം ലഭിക്കാൻ ഇടവിടം നൽകുക, ബാധിച്ച അവശിഷ്ടങ്ങൾ നീക്കം ചെയ്യുക."
+    },
+    "cure": {
+      "en": "Apply fungicides such as chlorothalonil or copper fungicides regularly.",
+      "ml": "ക്ലോറോത്താലോണിൽ അല്ലെങ്കിൽ കോപ്പർ ഫംഗിസൈഡുകൾ പോലുള്ള മരുന്നുകൾ പതിവായി പ്രയോഗിക്കുക."
+    }
   },
 
   "Tomato_healthy": {
-    "features": "Leaves appear green, firm, and free from spots or discoloration.",
-    "cause": "No disease present. The plant is healthy and growing normally.",
-    "prevention": "Maintain good agricultural practices such as proper watering, fertilization, and pest control.",
-    "cure": "No treatment required. Continue maintaining proper plant care."
+    "name": {
+      "en": "Healthy Tomato Plant",
+      "ml": "ആരോഗ്യകരമായ തക്കാളി ചെടി"
+    },
+    "features": {
+      "en": "Leaves appear green, firm, and free from spots or discoloration.",
+      "ml": "ഇലകൾ പച്ച നിറത്തിലും ശക്തമായതുമായിരിക്കും, പാടുകളോ നിറമാറ്റമോ ഉണ്ടാകില്ല."
+    },
+    "cause": {
+      "en": "No disease present. The plant is healthy and growing normally.",
+      "ml": "രോഗമില്ല. സസ്യം ആരോഗ്യത്തോടെ സാധാരണ വളർച്ചയിലാണ്."
+    },
+    "prevention": {
+      "en": "Maintain good agricultural practices such as proper watering, fertilization, and pest control.",
+      "ml": "ശരിയായ ജലസേചനം, വളപ്രയോഗം, കീടനിയന്ത്രണം എന്നിവ ഉൾപ്പെടുന്ന നല്ല കൃഷിരീതികൾ പാലിക്കുക."
+    },
+    "cure": {
+      "en": "No treatment required. Continue maintaining proper plant care.",
+      "ml": "ചികിത്സ ആവശ്യമില്ല. സസ്യസംരക്ഷണം തുടർന്നു നടത്തുക."
+    }
   },
 
   "Tomato_Late_blight": {
-    "features": "Large dark brown lesions on leaves with pale green edges and white fungal growth underneath.",
-    "cause": "Caused by the pathogen Phytophthora infestans which spreads rapidly in cool and moist weather.",
-    "prevention": "Avoid wet leaves, provide good airflow, remove infected plants, and use resistant varieties.",
-    "cure": "Apply fungicides containing copper or mancozeb to control the spread."
+    "name": {
+      "en": "Tomato Late Blight",
+      "ml": "അഴുകൽ രോഗം"
+    },
+    "features": {
+      "en": "Large dark brown lesions on leaves with pale green edges and white fungal growth underneath.",
+      "ml": "ഇലകളിൽ വലിയ കറുത്ത തവിട്ടുനിറത്തിലുള്ള പാടുകൾ കാണപ്പെടുകയും താഴെ വെളുത്ത ഫംഗസ് വളർച്ച കാണപ്പെടുകയും ചെയ്യും."
+    },
+    "cause": {
+      "en": "Caused by the pathogen Phytophthora infestans which spreads rapidly in cool and moist weather.",
+      "ml": "തണുപ്പും ഈർപ്പവും കൂടുതലുള്ള സാഹചര്യങ്ങളിൽ വേഗത്തിൽ പകരുന്ന Phytophthora infestans എന്ന രോഗാണുവാണ് കാരണം."
+    },
+    "prevention": {
+      "en": "Avoid wet leaves, provide good airflow, remove infected plants, and use resistant varieties.",
+      "ml": "ഇലകൾ നനയാതിരിക്കാൻ ശ്രദ്ധിക്കുക, നല്ല വായു സഞ്ചാരം ഉറപ്പാക്കുക, ബാധിച്ച സസ്യങ്ങൾ നീക്കം ചെയ്യുക, പ്രതിരോധ ശേഷിയുള്ള ഇനങ്ങൾ ഉപയോഗിക്കുക."
+    },
+    "cure": {
+      "en": "Apply fungicides containing copper or mancozeb to control the spread.",
+      "ml": "കോപർ അല്ലെങ്കിൽ മാൻകോസെബ് അടങ്ങിയ ഫംഗിസൈഡുകൾ പ്രയോഗിക്കുക."
+    }
   },
 
   "Tomato_Leaf_Mold": {
-    "features": "Yellow patches on upper leaf surfaces with olive-green mold on the underside.",
-    "cause": "Caused by the fungus Passalora fulva which develops in humid greenhouse conditions.",
-    "prevention": "Reduce humidity, improve ventilation, and avoid overhead watering.",
-    "cure": "Apply fungicides and remove infected leaves to stop the spread."
+    "name": {
+      "en": "Tomato Leaf Mold",
+      "ml": "ഇലപ്പൂപ്പൽ രോഗം"
+    },
+    "features": {
+      "en": "Yellow patches on upper leaf surfaces with olive-green mold on the underside.",
+      "ml": "ഇലയുടെ മുകളിൽ മഞ്ഞ പാടുകളും താഴെ ഒലീവ് പച്ച നിറത്തിലുള്ള പൂപ്പൽ വളർച്ചയും കാണപ്പെടുന്നു."
+    },
+    "cause": {
+      "en": "Caused by the fungus Passalora fulva which develops in humid greenhouse conditions.",
+      "ml": "ഈർപ്പം കൂടുതലുള്ള സാഹചര്യങ്ങളിൽ വളരുന്ന പാസലോറ ഫുൾവ എന്ന ഫംഗസ് മൂലമാണ് ഇത് ഉണ്ടാകുന്നത്."
+    },
+    "prevention": {
+      "en": "Reduce humidity, improve ventilation, and avoid overhead watering.",
+      "ml": "ഈർപ്പം കുറയ്ക്കുക, വായു സഞ്ചാരം മെച്ചപ്പെടുത്തുക, മുകളിലൂടെ വെള്ളം ഒഴിക്കുന്നത് ഒഴിവാക്കുക."
+    },
+    "cure": {
+      "en": "Apply fungicides and remove infected leaves to stop the spread.",
+      "ml": "ഫംഗിസൈഡുകൾ പ്രയോഗിക്കുകയും ബാധിച്ച ഇലകൾ നീക്കം ചെയ്യുകയും ചെയ്യുക."
+    }
   },
 
   "Tomato_Septoria_leaf_spot": {
-    "features": "Small circular spots with gray centers and dark edges on leaves.",
-    "cause": "Caused by the fungus Septoria lycopersici which spreads through water splash and plant debris.",
-    "prevention": "Use crop rotation, remove infected leaves, and keep foliage dry.",
-    "cure": "Apply fungicides such as chlorothalonil or copper-based sprays."
+    "name": {
+      "en": "Tomato Septoria Leaf Spot",
+      "ml": "സെപ്റ്റോറിയ ഇലപ്പുള്ളി രോഗം"
+    },
+    "features": {
+      "en": "Small circular spots with gray centers and dark edges on leaves.",
+      "ml": "ഇലകളിൽ ചാരനിറമുള്ള മധ്യഭാഗവും കറുത്ത അരികുകളും ഉള്ള ചെറിയ വൃത്താകൃതിയിലുള്ള പാടുകൾ കാണപ്പെടുന്നു."
+    },
+    "cause": {
+      "en": "Caused by the fungus Septoria lycopersici which spreads through water splash and plant debris.",
+      "ml": "വെള്ളത്തിന്റെ ചിതറലും സസ്യാവശിഷ്ടങ്ങളും വഴി പകരുന്ന Septoria lycopersici എന്ന ഫംഗസ് മൂലമാണ് ഇത് ഉണ്ടാകുന്നത്."
+    },
+    "prevention": {
+      "en": "Use crop rotation, remove infected leaves, and keep foliage dry.",
+      "ml": "വിളമാറ്റം നടത്തുക, ബാധിച്ച ഇലകൾ നീക്കം ചെയ്യുക, ഇലകൾ വരണ്ട നിലയിൽ സൂക്ഷിക്കുക."
+    },
+    "cure": {
+      "en": "Apply fungicides such as chlorothalonil or copper-based sprays.",
+      "ml": "ക്ലോറോത്താലോണിൽ അല്ലെങ്കിൽ കോപ്പർ അടിസ്ഥാനത്തിലുള്ള സ്പ്രേകൾ പ്രയോഗിക്കുക."
+    }
   },
 
   "Tomato_Spider_mites": {
-    "features": "Tiny yellow or white speckles on leaves and fine webbing on the underside.",
-    "cause": "Caused by spider mites feeding on plant sap, usually in hot and dry conditions.",
-    "prevention": "Maintain adequate humidity and regularly inspect plants for early signs of mites.",
-    "cure": "Use insecticidal soaps, neem oil, or miticides to control the infestation."
+    "name": {
+      "en": "Tomato Spider Mite Infestation",
+      "ml": "ചിലന്തിച്ചെള്ള് രോഗം"
+    },
+    "features": {
+      "en": "Tiny yellow or white speckles on leaves and fine webbing on the underside.",
+      "ml": "ഇലകളിൽ ചെറിയ മഞ്ഞയോ വെളുത്തയോ പാടുകളും താഴെ സൂക്ഷ്മമായ ജാലങ്ങളും കാണപ്പെടുന്നു."
+    },
+    "cause": {
+      "en": "Caused by spider mites feeding on plant sap, usually in hot and dry conditions.",
+      "ml": "ചൂടും വരണ്ടതുമായ സാഹചര്യങ്ങളിൽ സസ്യരസം കുടിക്കുന്ന സ്പൈഡർ മൈറ്റുകൾ മൂലമാണ് ഇത് ഉണ്ടാകുന്നത്."
+    },
+    "prevention": {
+      "en": "Maintain adequate humidity and regularly inspect plants for early signs of mites.",
+      "ml": "ഈർപ്പം നിലനിർത്തുക, സസ്യങ്ങളെ പതിവായി പരിശോധിച്ച് ആദ്യ ലക്ഷണങ്ങൾ കണ്ടെത്തുക."
+    },
+    "cure": {
+      "en": "Use insecticidal soaps, neem oil, or miticides to control the infestation.",
+      "ml": "കീടനാശിനി സോപ്പുകൾ, നീം ഓയിൽ, അല്ലെങ്കിൽ മൈറ്റിസൈഡുകൾ ഉപയോഗിക്കുക."
+    }
   },
 
   "Tomato_Target_Spot": {
-    "features": "Brown circular lesions with concentric rings that resemble a target pattern.",
-    "cause": "Caused by the fungus Corynespora cassiicola which spreads in warm and humid environments.",
-    "prevention": "Ensure proper plant spacing, remove infected debris, and practice crop rotation.",
-    "cure": "Apply fungicides such as chlorothalonil or azoxystrobin."
+    "name": {
+      "en": "Tomato Target Spot",
+      "ml": "ലക്ഷ്യപ്പുള്ളി രോഗം"
+    },
+    "features": {
+      "en": "Brown circular lesions with concentric rings that resemble a target pattern.",
+      "ml": "ലക്ഷ്യചിഹ്നം പോലുള്ള വലയങ്ങളോടുകൂടിയ തവിട്ടുനിറത്തിലുള്ള വൃത്താകൃതിയിലുള്ള പാടുകൾ."
+    },
+    "cause": {
+      "en": "Caused by the fungus Corynespora cassiicola which spreads in warm and humid environments.",
+      "ml": "ചൂടും ഈർപ്പവും കൂടുതലുള്ള സാഹചര്യങ്ങളിൽ പകരുന്ന Corynespora cassiicola എന്ന ഫംഗസ് മൂലമാണ് ഇത് ഉണ്ടാകുന്നത്."
+    },
+    "prevention": {
+      "en": "Ensure proper plant spacing, remove infected debris, and practice crop rotation.",
+      "ml": "സസ്യങ്ങൾ തമ്മിൽ ആവശ്യമായ ഇടവിടം നൽകുക, ബാധിച്ച അവശിഷ്ടങ്ങൾ നീക്കം ചെയ്യുക, വിളമാറ്റം നടത്തുക."
+    },
+    "cure": {
+      "en": "Apply fungicides such as chlorothalonil or azoxystrobin.",
+      "ml": "ക്ലോറോത്താലോണിൽ അല്ലെങ്കിൽ അസോക്സിസ്ട്രോബിൻ പോലുള്ള ഫംഗിസൈഡുകൾ പ്രയോഗിക്കുക."
+    }
   },
 
   "Tomato_Tomato_mosaic_virus": {
-    "features": "Mosaic-like yellow and green mottling on leaves with distorted growth.",
-    "cause": "Caused by Tomato Mosaic Virus which spreads through contaminated tools, seeds, and human handling.",
-    "prevention": "Use virus-resistant varieties, disinfect tools, and avoid handling plants after tobacco use.",
-    "cure": "There is no cure; remove and destroy infected plants immediately."
+    "name": {
+      "en": "Tomato Mosaic Virus",
+      "ml": "ചിത്രവർണ്ണ രോഗം"
+    },
+    "features": {
+      "en": "Mosaic-like yellow and green mottling on leaves with distorted growth.",
+      "ml": "ഇലകളിൽ മഞ്ഞയും പച്ചയും കലർന്ന മോസൈക്ക് രൂപത്തിലുള്ള പാടുകളും അസാധാരണ വളർച്ചയും കാണപ്പെടുന്നു."
+    },
+    "cause": {
+      "en": "Caused by Tomato Mosaic Virus which spreads through contaminated tools, seeds, and human handling.",
+      "ml": "മലിനമായ ഉപകരണങ്ങൾ, വിത്തുകൾ, മനുഷ്യസ്പർശം എന്നിവ വഴി പകരുന്ന Tomato Mosaic Virus മൂലമാണ് ഇത് ഉണ്ടാകുന്നത്."
+    },
+    "prevention": {
+      "en": "Use virus-resistant varieties, disinfect tools, and avoid handling plants after tobacco use.",
+      "ml": "വൈറസ് പ്രതിരോധ ശേഷിയുള്ള ഇനങ്ങൾ ഉപയോഗിക്കുക, ഉപകരണങ്ങൾ അണുവിമുക്തമാക്കുക, പുകയില ഉപയോഗിച്ച ശേഷം സസ്യങ്ങളെ കൈകാര്യം ചെയ്യുന്നത് ഒഴിവാക്കുക."
+    },
+    "cure": {
+      "en": "There is no cure; remove and destroy infected plants immediately.",
+      "ml": "ചികിത്സയില്ല; ബാധിച്ച സസ്യങ്ങൾ ഉടൻ നീക്കം ചെയ്ത് നശിപ്പിക്കുക."
+    }
   },
 
   "Tomato_Yellow_Leaf_Curl_Virus": {
-    "features": "Leaves curl upward and turn yellow with stunted plant growth.",
-    "cause": "Caused by Tomato Yellow Leaf Curl Virus transmitted by whiteflies.",
-    "prevention": "Control whitefly populations, use resistant varieties, and install insect screens.",
-    "cure": "Remove infected plants and control whiteflies using insecticides or neem oil."
+    "name": {
+      "en": "Tomato Yellow Leaf Curl Virus",
+      "ml": "ഇലച്ചുരുട്ടി രോഗം (അല്ലെങ്കിൽ മഞ്ഞളിപ്പ് രോഗം)"
+    },
+    "features": {
+      "en": "Leaves curl upward and turn yellow with stunted plant growth.",
+      "ml": "ഇലകൾ മുകളിലേക്ക് വളയുകയും മഞ്ഞനിറത്തിലാകുകയും സസ്യവളർച്ച കുറയുകയും ചെയ്യും."
+    },
+    "cause": {
+      "en": "Caused by Tomato Yellow Leaf Curl Virus transmitted by whiteflies.",
+      "ml": "വെളുത്ത ഈച്ചകൾ വഴി പകരുന്ന Tomato Yellow Leaf Curl Virus മൂലമാണ് ഇത് ഉണ്ടാകുന്നത്."
+    },
+    "prevention": {
+      "en": "Control whitefly populations, use resistant varieties, and install insect screens.",
+      "ml": "വെളുത്ത ഈച്ചകളെ നിയന്ത്രിക്കുക, പ്രതിരോധ ശേഷിയുള്ള ഇനങ്ങൾ ഉപയോഗിക്കുക, കീടനിരോധക വലകൾ സ്ഥാപിക്കുക."
+    },
+    "cure": {
+      "en": "Remove infected plants and control whiteflies using insecticides or neem oil.",
+      "ml": "ബാധിച്ച സസ്യങ്ങൾ നീക്കം ചെയ്യുകയും കീടനാശിനികൾ അല്ലെങ്കിൽ നീം ഓയിൽ ഉപയോഗിച്ച് വെളുത്ത ഈച്ചകളെ നിയന്ത്രിക്കുകയും ചെയ്യുക."
+    }
   }
 }

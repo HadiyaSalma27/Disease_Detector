@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
+import '../services/notification_service.dart';
 import '../providers/language_provider.dart';
 import '../l10n/app_strings.dart';
 import '../services/tflite_service.dart';
@@ -45,7 +46,7 @@ class _DetectDiseaseScreenState extends State<DetectDiseaseScreen> {
 
   }
 
-  // CAMERA
+  /// CAMERA
   Future pickCamera() async {
 
     final picked =
@@ -60,7 +61,7 @@ class _DetectDiseaseScreenState extends State<DetectDiseaseScreen> {
     }
   }
 
-  // GALLERY
+  /// GALLERY
   Future pickGallery() async {
 
     final picked =
@@ -75,7 +76,7 @@ class _DetectDiseaseScreenState extends State<DetectDiseaseScreen> {
     }
   }
 
-  // REMOVE IMAGE
+  /// REMOVE IMAGE
   void removeImage() {
 
     setState(() {
@@ -86,7 +87,7 @@ class _DetectDiseaseScreenState extends State<DetectDiseaseScreen> {
 
   }
 
-  // PREDICTION
+  /// PREDICTION
   void predict(String lang) async {
 
     if (!modelLoaded) {
@@ -122,15 +123,6 @@ class _DetectDiseaseScreenState extends State<DetectDiseaseScreen> {
 
       print("Prediction from model: $prediction");
 
-      /* CLEAN MODEL OUTPUT
-      String cleanPrediction = prediction
-          .replaceAll("Tomato___", "")
-          .replaceAll("Tomato_", "")
-          .replaceAll("_", " ");
-
-      print("Cleaned disease name: $cleanPrediction");*/
-
-      // GET DATA FROM JSON
       diseaseInfo =
           DiseaseInfoService.getDiseaseInfo(prediction);
 
@@ -179,7 +171,7 @@ class _DetectDiseaseScreenState extends State<DetectDiseaseScreen> {
         child: Column(
           children: [
 
-            /// IMAGE PREVIEW WITH CLOSE BUTTON
+            /// IMAGE PREVIEW
             if (selectedImage != null)
               Card(
                 shape: RoundedRectangleBorder(
@@ -220,7 +212,7 @@ class _DetectDiseaseScreenState extends State<DetectDiseaseScreen> {
 
             const SizedBox(height: 20),
 
-            /// CAMERA & GALLERY BUTTONS
+            /// CAMERA & GALLERY
             Row(
               children: [
 
@@ -292,8 +284,8 @@ class _DetectDiseaseScreenState extends State<DetectDiseaseScreen> {
 
             const SizedBox(height: 20),
 
-            /// RESULT
-            if (result.isNotEmpty)
+            /// PREDICTION RESULT
+            if (diseaseInfo != null)
               Card(
                 elevation: 4,
                 shape: RoundedRectangleBorder(
@@ -302,7 +294,7 @@ class _DetectDiseaseScreenState extends State<DetectDiseaseScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: Text(
-                    result,
+                    diseaseInfo!['name'][lang],
                     style: const TextStyle(
                       fontSize: 22,
                       color: Colors.green,
@@ -325,28 +317,28 @@ class _DetectDiseaseScreenState extends State<DetectDiseaseScreen> {
                     children: [
 
                       Text(
-                        "Features: ${diseaseInfo!['features'] ?? 'N/A'}",
+                        "Features:\n${diseaseInfo!['features'][lang]}",
                         style: const TextStyle(fontSize: 16),
                       ),
 
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 12),
 
                       Text(
-                        "Cause: ${diseaseInfo!['cause'] ?? 'N/A'}",
+                        "Cause:\n${diseaseInfo!['cause'][lang]}",
                         style: const TextStyle(fontSize: 16),
                       ),
 
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 12),
 
                       Text(
-                        "Prevention: ${diseaseInfo!['prevention'] ?? 'N/A'}",
+                        "Prevention:\n${diseaseInfo!['prevention'][lang]}",
                         style: const TextStyle(fontSize: 16),
                       ),
 
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 12),
 
                       Text(
-                        "Cure: ${diseaseInfo!['cure'] ?? 'N/A'}",
+                        "Cure:\n${diseaseInfo!['cure'][lang]}",
                         style: const TextStyle(fontSize: 16),
                       ),
 
@@ -354,6 +346,42 @@ class _DetectDiseaseScreenState extends State<DetectDiseaseScreen> {
                   ),
                 ),
               ),
+
+            const SizedBox(height: 20),
+
+            /// ENABLE REMINDER BUTTON
+            /*if (diseaseInfo != null)
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    padding: const EdgeInsets.all(15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                  ),
+                  onPressed: () async {
+
+                    await NotificationService.scheduleReminder(
+                      "Treatment Reminder",
+                      "Apply treatment for ${diseaseInfo!['name'][lang]}",
+                      5, // 1 minute demo
+                    );
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Treatment reminder scheduled"),
+                      ),
+                    );
+
+                  },
+                  child: const Text(
+                    "Enable Treatment Reminder",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
+              ),*/
 
           ],
         ),
