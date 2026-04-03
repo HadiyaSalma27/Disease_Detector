@@ -3,10 +3,10 @@ import 'package:provider/provider.dart';
 
 import '../providers/language_provider.dart';
 import '../l10n/app_strings.dart';
-
+import 'market_analysis_screen.dart';
 import 'detect_disease_screen.dart';
 import 'profile_screen.dart';
-import 'notifications_screen.dart';
+import 'help_screen.dart';
 import 'login_screen.dart';
 import 'signup_screen.dart';
 
@@ -25,28 +25,31 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _onItemTapped(int index) {
 
-    setState(() {
-      _selectedIndex = index;
-    });
+  if (index == _selectedIndex) return;
 
-    if (index == 0) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => ProfileScreen(),
-        ),
-      );
-    }
-
-    else if (index == 2) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => NotificationScreen(),
-        ),
-      );
-    }
+  if (index == 0) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => ProfileScreen(),
+      ),
+    );
   }
+
+  else if (index == 2) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const HelpScreen(),
+      ),
+    );
+  }
+
+  // Keep home selected always when returning
+  setState(() {
+    _selectedIndex = 1;
+  });
+}
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       appBar: AppBar(
         backgroundColor: Colors.green,
-        elevation: 2,
         centerTitle: true,
-
         title: DropdownButtonHideUnderline(
           child: DropdownButton<String>(
             value: lang,
@@ -76,95 +77,90 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
         ),
-
         actions: [
           PopupMenuButton<String>(
             icon: const Icon(Icons.menu, color: Colors.white),
             onSelected: (value) {
-
               if (value == "login") {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (_) => const LoginScreen(),
-                  ),
+                  MaterialPageRoute(builder: (_) => const LoginScreen()),
                 );
               }
 
               if (value == "signup") {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (_) => const SignupScreen(),
-                  ),
+                  MaterialPageRoute(builder: (_) => const SignupScreen()),
                 );
               }
             },
             itemBuilder: (context) => [
-
               PopupMenuItem(
                 value: "login",
                 child: Text(AppStrings.text("login", lang)),
               ),
-
               PopupMenuItem(
                 value: "signup",
                 child: Text(AppStrings.text("signup", lang)),
               ),
-
               PopupMenuItem(
                 value: "logout",
                 child: Text(AppStrings.text("logout", lang)),
               ),
-
-              PopupMenuItem(
+              /*PopupMenuItem(
                 value: "help",
                 child: Text(AppStrings.text("help", lang)),
-              ),
+              ),*/
             ],
           )
         ],
       ),
 
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
+      // 🔥 FULL SCREEN BACKGROUND
+      body: Stack(
+        children: [
 
-              const SizedBox(height: 30),
+          /// Background Image
+          Positioned.fill(
+            child: Image.asset(
+              "assets/images/bgimg.webp",
+              fit: BoxFit.cover,
+            ),
+          ),
 
-              Text(
-                AppStrings.text("home_title", lang),
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+          /// Dark Overlay
+          Positioned.fill(
+            child: Container(
+              color: Colors.black.withOpacity(0.4),
+            ),
+          ),
 
-              const SizedBox(height: 20),
+          /// CONTENT
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
 
-              Image.asset(
-                "assets/images/tomato_plant.png",
-                height: 500,
-                fit: BoxFit.contain,
-              ),
-
-              const SizedBox(height: 40),
-
-              /// Detect Disease
-              SizedBox(
-                width: double.infinity,
-                height: 55,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
+                Text(
+                  AppStrings.text("home_title", lang),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
-                  onPressed: () {
+                ),
+
+                const SizedBox(height: 40),
+
+                /// Detect Disease Button
+                AnimatedButton(
+                  text: AppStrings.text("detect_disease", lang),
+                  color: Colors.green,
+                  icon: Icons.camera_alt,
+                  onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -172,48 +168,47 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   },
-                  child: Text(
-                    AppStrings.text("detect_disease", lang),
-                    style: const TextStyle(fontSize: 18),
-                  ),
                 ),
-              ),
 
-              const SizedBox(height: 20),
+                const SizedBox(height: 20),
 
-              /// Weather AI Alert
-              SizedBox(
-                width: double.infinity,
-                height: 55,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                  onPressed: () async {
+                /// Weather Button
+                AnimatedButton(
+                  text: AppStrings.text("check_weather_disease_risk", lang),
+                  color: Colors.orange,
+                  icon: Icons.cloud,
+                  onTap: () async {
                     await WeatherAlertService.checkWeatherDiseaseRisk();
                   },
-                  child: const Text(
-                    "Check Weather Disease Risk",
-                    style: TextStyle(fontSize: 18),
-                  ),
                 ),
-              ),
+                 const SizedBox(height: 20),
 
-            ],
+/// Market Analysis Button
+              AnimatedButton(
+                text: AppStrings.text("market_analysis", lang),  // later AppStrings add ചെയ്യാം
+                color: Colors.blue,
+                icon: Icons.show_chart,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const MarketAnalysisScreen(),
+                    ),
+                  );
+                },
+              ),
+              ],
+            ),
           ),
-        ),
+        ],
       ),
+           
 
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.green,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.green,
-        unselectedItemColor: Colors.grey,
-        showUnselectedLabels: true,
+        selectedItemColor: Colors.white,
         items: [
 
           BottomNavigationBarItem(
@@ -227,10 +222,96 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           BottomNavigationBarItem(
-            icon: const Icon(Icons.notifications),
-            label: AppStrings.text("notification", lang),
+            icon: const Icon(Icons.help_outline),
+            label: AppStrings.text("help", lang),
           ),
         ],
+      ),
+    );
+  }
+}
+
+////////////////////////////////////////////////////////////
+/// 🔥 CUSTOM ANIMATED BUTTON
+////////////////////////////////////////////////////////////
+
+class AnimatedButton extends StatefulWidget {
+  final String text;
+  final Color color;
+  final IconData icon;
+  final VoidCallback onTap;
+
+  const AnimatedButton({
+    super.key,
+    required this.text,
+    required this.color,
+    required this.icon,
+    required this.onTap,
+  });
+
+  @override
+  State<AnimatedButton> createState() => _AnimatedButtonState();
+}
+
+class _AnimatedButtonState extends State<AnimatedButton> {
+
+  double scale = 1;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+
+      onTapDown: (_) {
+        setState(() => scale = 0.95);
+      },
+
+      onTapUp: (_) {
+        setState(() => scale = 1);
+        widget.onTap();
+      },
+
+      onTapCancel: () {
+        setState(() => scale = 1);
+      },
+
+      child: AnimatedScale(
+        scale: scale,
+        duration: const Duration(milliseconds: 150),
+
+        child: Container(
+          width: double.infinity,
+          height: 60,
+          decoration: BoxDecoration(
+            color: widget.color,
+            borderRadius: BorderRadius.circular(30),
+            boxShadow: [
+              BoxShadow(
+                color: widget.color.withOpacity(0.6),
+                blurRadius: 10,
+                offset: const Offset(0, 5),
+              ),
+            ],
+          ),
+
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+
+              Icon(widget.icon, color: Colors.white),
+
+              const SizedBox(width: 10),
+
+              Text(
+                widget.text,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -64,6 +64,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  Widget glassCard({required Widget child}) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.9),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+          )
+        ],
+      ),
+      child: child,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -143,107 +161,138 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
         return Scaffold(
 
-          backgroundColor: Colors.grey[100],
-
           appBar: AppBar(
             title: const Text("Profile"),
             backgroundColor: Colors.green,
           ),
 
-          body: SingleChildScrollView(
-
-            child: Column(
-              children: [
-
-                const SizedBox(height: 25),
-
-                GestureDetector(
-                  onTap: pickImage,
-                  child: CircleAvatar(
-                    radius: 60,
-                    backgroundImage: profileImage != null
-                        ? FileImage(profileImage!)
-                        : null,
-                    child: profileImage == null
-                        ? const Icon(Icons.camera_alt, size: 40)
-                        : null,
-                  ),
+          /// 🔥 FIXED FULL HEIGHT BACKGROUND
+          body: SizedBox.expand(
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Color(0xFFa8e063), Color(0xFF56ab2f)],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
                 ),
+              ),
 
-                const SizedBox(height: 15),
+              child: SingleChildScrollView(
 
-                Text(
-                  data["name"] ?? "",
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: Column(
+                  children: [
+
+                    const SizedBox(height: 25),
+
+                    GestureDetector(
+                      onTap: pickImage,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              blurRadius: 10,
+                            )
+                          ],
+                        ),
+                        child: CircleAvatar(
+                          radius: 60,
+                          backgroundColor: Colors.white,
+                          backgroundImage: profileImage != null
+                              ? FileImage(profileImage!)
+                              : null,
+                          child: profileImage == null
+                              ? const Icon(Icons.camera_alt, size: 40)
+                              : null,
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 15),
+
+                    Text(
+                      data["name"] ?? "",
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+
+                    const SizedBox(height: 5),
+
+                    Text(
+                      data["email"] ?? "",
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.white70,
+                      ),
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    glassCard(
+                      child: Column(
+                        children: [
+
+                          profileTile(
+                            icon: Icons.person,
+                            title: "Name",
+                            value: data["name"] ?? "",
+                          ),
+
+                          profileTile(
+                            icon: Icons.email,
+                            title: "Email",
+                            value: data["email"] ?? "",
+                          ),
+
+                          profileTile(
+                            icon: Icons.phone,
+                            title: "Phone",
+                            value: data["phone"] ?? "",
+                          ),
+
+                          const Divider(),
+
+                          actionTile(
+                            icon: Icons.lock,
+                            title: "Change Password",
+                            onTap: () async {
+
+                              await FirebaseAuth.instance
+                                  .sendPasswordResetEmail(email: user.email!);
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content:
+                                    Text("Password reset email sent")),
+                              );
+                            },
+                          ),
+
+                          actionTile(
+                            icon: Icons.logout,
+                            title: "Logout",
+                            color: Colors.red,
+                            onTap: () async {
+
+                              await FirebaseAuth.instance.signOut();
+
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => const LoginScreen()),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-
-                const SizedBox(height: 5),
-
-                Text(
-                  data["email"] ?? "",
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey,
-                  ),
-                ),
-
-                const SizedBox(height: 20),
-
-                const Divider(),
-
-                profileTile(
-                  icon: Icons.person,
-                  title: "Name",
-                  value: data["name"] ?? "",
-                ),
-
-                profileTile(
-                  icon: Icons.email,
-                  title: "Email",
-                  value: data["email"] ?? "",
-                ),
-
-                profileTile(
-                  icon: Icons.phone,
-                  title: "Phone",
-                  value: data["phone"] ?? "",
-                ),
-
-                actionTile(
-                  icon: Icons.lock,
-                  title: "Change Password",
-                  onTap: () async {
-
-                    await FirebaseAuth.instance
-                        .sendPasswordResetEmail(email: user.email!);
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                          content:
-                          Text("Password reset email sent")),
-                    );
-                  },
-                ),
-
-                actionTile(
-                  icon: Icons.logout,
-                  title: "Logout",
-                  color: Colors.red,
-                  onTap: () async {
-
-                    await FirebaseAuth.instance.signOut();
-
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => const LoginScreen()),
-                    );
-                  },
-                ),
-              ],
+              ),
             ),
           ),
         );
