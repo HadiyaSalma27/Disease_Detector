@@ -5,7 +5,7 @@ class MarketService {
 
   static Future<Map<String, dynamic>?> getMarketData(String lang) async {
 
-    final url = Uri.parse("http://192.168.1.4:3000/api/market-analysis");
+    final url = Uri.parse("https://agri-backend-jx81.onrender.com/api/market-analysis");
 
     final response = await http.post(
       url,
